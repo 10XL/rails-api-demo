@@ -12,4 +12,6 @@ group :development do
 
   gem 'rspec-rails', '~>3.5', '>=3.5.2'
 end
+
 gem 'pg'
+gem 'mongoid', '~>5.1', '>=5.1.5'
