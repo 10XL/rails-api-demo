@@ -1,2 +1,4 @@
-class Bar < ActiveRecord::Base
+class Bar
+  include Mongoid::Document
+  field :name, type: String
 end
