@@ -1,9 +1,19 @@
 <div>
 	<h3>Foos</h3>
 	<span>(from spa-demo/foos/foos.html)</span>
-	<u>
+
+	<form>
+		<div>
+			<label>Name:</label>
+			<input name="name" ng-model="foosVM.foo.name" required="required"/>
+		</div>
+		<button ng-if="!foosVM.foo.id" type="submit" ng-click="foosVM.create()">Create Foo</button>
+	</form>
+
+
+	<ul>
 	<li ng-repeat="foo in foosVM.foos | orderBy: 'name'">
 		<a ng-click="foosVM.edit(foo)">{{foo.name}}</a>		
 	</li>
-	</u>
+	</ul>
 </div>
