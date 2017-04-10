@@ -70,8 +70,11 @@
     }
 
     function removeElement(elements, element) {
-      for (var i=0; elements[i].id === element.id; i++)
-        if (elements[i].id === element.id) elements.splice(i, 1);
+      for (var i=0; i < elements.length; i++)
+        if (elements[i].id === element.id){
+          elements.splice(i, 1);
+          break;
+        }
     }
 
   }
