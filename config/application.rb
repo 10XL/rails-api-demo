@@ -38,7 +38,7 @@ module CapstoneDemoapp
 
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
-        origins '*'
+        origins 'https://capstone-module1-demo.herokuapp.com'
 
         resource '/api/*',
           :headers => :any,
