@@ -11,7 +11,7 @@ describe Bar, :type => :model, :orm => :mongoid do
   end
 
   context "created Foo (let)" do
-    let(:bar) { Bar.create(:name=>"test") }
+    let(:bar) { @foo = FactoryGirl.create(:bar, :name=>"test") }
     include_context "db_scope"
     
     it { expect(bar).to be_persisted }

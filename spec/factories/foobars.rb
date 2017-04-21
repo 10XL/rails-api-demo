@@ -23,6 +23,10 @@ FactoryGirl.define do
     end
   end
 
+  factory :foo_faker, class: 'Foo' do
+    name { Faker::Name.name }
+  end
+
   factory :foo_ctor, class: 'Foo' do
     transient do
       hash {}
@@ -30,6 +34,13 @@ FactoryGirl.define do
     initialize_with { Foo.new(hash) }
   end
 
-  factory :foo, :parent=>:foo_fixed do
+  factory :foo, :parent=>:foo_faker do
+  end
+
+  factory :bar_faker, class: 'Bar' do
+    name { Faker::Team.name.titleize }
+  end
+
+  factory :bar, :parent=>:bar_faker, class: 'Bar' do
   end
 end
