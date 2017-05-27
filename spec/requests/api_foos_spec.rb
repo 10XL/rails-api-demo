@@ -49,7 +49,23 @@ RSpec.describe "Foo API", type: :request do
   end
 
   context "create a new Foo" do
-    it "can create with provided name"
+    let(:foo_state) { FactoryGirl.attributes_for(:foo) }
+
+    it "can create with provided name" do
+      jpost foos_path, foo_state
+      expect(response).to have_http_status(:created)
+      expect(response.content_type).to eq("application/json")
+
+      # check the payload of the response
+      payload = parsed_body
+      expect(payload).to have_key("id")
+      expect(payload).to have_key("name")
+      expect(payload["name"]).to eq(foo_state[:name])
+      id = payload["id"]
+
+      # verify we can locate the created instance in DB
+      expect(Foo.find(id).name).to eq(foo_state[:name])
+    end
   end
 
   context "existing Foo" do
