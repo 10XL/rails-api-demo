@@ -3,8 +3,11 @@ module ApiHelper
     JSON.parse(response.body)
   end
 
-  def jpost(path, params={}, headers={})
-    headers = headers.merge('content-type' => 'application/json') unless params.empty?
-    post(path, params.to_json, headers)
+  # automates the passing of payload bodies as json
+  ['post', 'put'].each do |http_method_name|
+    define_method("j#{http_method_name}") do |path, params={}, headers={}|
+      headers = headers.merge('content-type' => 'application/json') unless params.empty?
+      self.send(http_method_name, path, params.to_json, headers)
+    end
   end
 end

@@ -69,8 +69,31 @@ RSpec.describe "Foo API", type: :request do
   end
 
   context "existing Foo" do
-    it "can update name"
-    it "can be deleted"
+    let(:foo) { FactoryGirl.create(:foo) }
+    let(:new_name) { "testing" }
+
+    it "can update name" do
+      # veryify name is not yet the new name
+      expect(foo.name).to_not eq(new_name)
+
+      # change to the new name
+      jput foo_path(foo.id), {:name => new_name}
+      expect(response).to have_http_status(:no_content)
+
+      #verify we can locate the created instance in DB
+      expect(Foo.find(foo.id).name).to eq(new_name)
+    end
+    
+    it "can be deleted" do
+      head foo_path(foo.id)
+      expect(response).to have_http_status(:ok)
+
+      delete foo_path(foo.id)
+      expect(response).to have_http_status(:no_content)
+
+      head foo_path(foo.id)
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end
 
