@@ -14,16 +14,23 @@ RSpec.describe "Bar API", type: :request do
   end
 
   context "a specific Bar exists" do
-    it "returns Bar when using correct ID"
-    it "returns not found when using incorrect ID"
+    it_should_behave_like "show resource", :bar do
+      let(:response_check) do
+        # pp payload
+        expect(payload).to have_key("id")
+        expect(payload).to have_key("name")
+        expect(payload["id"]).to eq(resource.id.to_s)
+        expect(payload["name"]).to eq(resource.name)
+      end
+    end
   end
 
   context "create a new Bar" do
-    it "can create with provided name"
+    it_should_behave_like "create resource", :bar
   end
 
   context "existing Bar" do
-    it "can update name"
+    it_should_behave_like "existing resource", :bar
   end
 
 end
