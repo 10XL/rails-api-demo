@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Mainpages", type: :feature do
+RSpec.feature "Mainpages", type: :feature, :js=>true do
   context "when the main page is accessed" do
     before(:each) do
       visit "/"

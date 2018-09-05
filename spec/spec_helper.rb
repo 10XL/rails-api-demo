@@ -15,9 +15,24 @@
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.
 
- require 'mongoid-rspec'
- require_relative 'support/database_cleaners.rb'
- require_relative 'support/api_helper.rb'
+require 'mongoid-rspec'
+require 'capybara/rspec'
+require_relative 'support/database_cleaners.rb'
+require_relative 'support/api_helper.rb'
+
+
+browser = :chrome
+Capybara.register_driver :selenium do |app|
+  if browser == :chrome
+    Capybara::Selenium::Driver.new(app, :browser=>:chrome)
+  else
+    if ENV['FIREFOX_BINARY_PATH']
+      require 'selenium/webdriver'
+      Selenium::WebDriver::Firefox::Binary.path=ENV['FIREFOX_BINARY_PATH']
+    end
+    Capybara::Selenium::Driver.new(app, :browser=>:firefox)
+  end
+end
 
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
